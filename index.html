@@ -57,20 +57,21 @@
 <body>
 
     <div class="gallery-card">
-        <h1>Dynamic Image Swap (Auto 3s Timer)</h1>
+        <h1>Dynamic Image Gallery (Auto 3s Loop)</h1>
         
         <div class="image-container">
             <img id="galleryImage" src="https://picsum.photos/id/1018/800/600" alt="Gallery Image">
         </div>
 
-        <button class="swap-btn" onclick="swapImage()">Swap Image Now</button>
+        <button class="swap-btn" onclick="swapImage()">Next Image</button>
     </div>
 
     <script>
-        // Array containing the images to swap between
+        // Array of images to loop through continuously
         const images = [
             "https://picsum.photos/id/1018/800/600",
-            "https://picsum.photos/id/1015/800/600"
+            "https://picsum.photos/id/1015/800/600",
+            "https://picsum.photos/id/1019/800/600"
         ];
         
         let currentIndex = 0;
@@ -78,10 +79,10 @@
         function swapImage() {
             const imgElement = document.getElementById("galleryImage");
             
-            // Toggle index between 0 and 1 (or more if you add extra images)
+            // Increment index and loop back to 0 when reaching the end of the array
             currentIndex = (currentIndex + 1) % images.length;
             
-            // Smooth fade transition
+            // Smooth fade transition effect
             imgElement.style.opacity = 0;
             setTimeout(() => {
                 imgElement.src = images[currentIndex];
@@ -89,8 +90,8 @@
             }, 150);
         }
 
-        // Automatically trigger the swapImage function every 3000 milliseconds (3 seconds)
-        setInterval(swapImage, 1000);
+        // Automatically call swapImage every 3 seconds (3000 milliseconds)
+        setInterval(swapImage, 3000);
     </script>
 
 </body>
