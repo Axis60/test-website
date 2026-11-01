@@ -3,42 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Proxmox Docker Site</title>
+    <title>Dynamic Image Gallery</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             background-color: #f4f6f9;
             color: #333;
             text-align: center;
-            padding: 80px 20px;
+            padding: 40px 20px;
         }
-        .container {
-            max-width: 650px;
+        .gallery-card {
+            max-width: 600px;
             margin: 0 auto;
             background: #ffffff;
-            padding: 40px;
+            padding: 30px;
             border-radius: 12px;
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
         }
-        h1 { color: #e67e22; margin-bottom: 10px; }
-        p { color: #666; font-size: 1.1rem; line-height: 1.6; }
-        .badge {
-            display: inline-block;
-            background: #2ecc71;
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        .image-container {
+            width: 100%;
+            height: 350px;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #eee;
+            margin-bottom: 20px;
+        }
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .swap-btn {
+            background-color: #3498db;
             color: white;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin-top: 20px;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
             font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+        .swap-btn:hover {
+            background-color: #2980b9;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Hello from Proxmox & Docker!</h1>
-        <p>This simple static website was built locally, pushed to GitHub, built via containers, and deployed seamlessly onto your Proxmox server.</p>
-        <div class="badge">Status: Online & Running 🚀</div>
+
+    <div class="gallery-card">
+        <h1>Dynamic Image Swap</h1>
+        
+        <div class="image-container">
+            <img id="galleryImage" src="https://picsum.photos/id/1018/800/600" alt="Gallery Image">
+        </div>
+
+        <button class="swap-btn" onclick="swapImage()">Swap Image</button>
     </div>
+
+    <script>
+        // Array containing the two image URLs to swap between
+        const images = [
+            "https://picsum.photos/id/1018/800/600",
+            "https://picsum.photos/id/1015/800/600"
+        ];
+        
+        let currentIndex = 0;
+
+        function swapImage() {
+            const imgElement = document.getElementById("galleryImage");
+            
+            // Toggle index between 0 and 1
+            currentIndex = currentIndex === 0 ? 1 : 0;
+            
+            // Smooth fade transition
+            imgElement.style.opacity = 0;
+            setTimeout(() => {
+                imgElement.src = images[currentIndex];
+                imgElement.style.opacity = 1;
+            }, 150);
+        }
+    </script>
+
 </body>
 </html>
