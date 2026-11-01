@@ -1,8 +1,13 @@
-# Use a lightweight Nginx web server
-FROM nginx:alpine
+FROM python:3.11-slim
 
-# Copy your static website file into the Nginx public directory
-COPY index.html /usr/share/nginx/html/index.html
+WORKDIR /app
 
-# Expose port 80 for web traffic
-EXPOSE 80
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy all code (including templates/ and app.py) into the container
+COPY . /app
+
+EXPOSE 8080
+
+CMD ["python", "app.py"]
